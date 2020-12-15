@@ -4,11 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Firm {
     String name;
-    String image;
     String telephone;
     String email;
-    @JsonIgnore
-    String sameas;
     String url;
     Address address;
 
@@ -24,13 +21,6 @@ public class Firm {
         this.name = name;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
 
     public String getTelephone() {
         return telephone;
@@ -48,13 +38,6 @@ public class Firm {
         this.email = email;
     }
 
-    public String getSameas() {
-        return sameas;
-    }
-
-    public void setSameas(String sameas) {
-        this.sameas = sameas;
-    }
 
     public String getUrl() {
         return url;

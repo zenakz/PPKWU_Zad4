@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +35,6 @@ public class Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("ok");
 
         return companies;
     }
