@@ -12,17 +12,19 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class Controller {
 
     @GetMapping("/search")
-    String getSearchResults(String searchString, HttpServletResponse response){
+    List<Firm> getSearchResults(String searchString, HttpServletResponse response){
         String url = "https://panoramafirm.pl/szukaj?k="+searchString;
+        List<Firm> companies = new ArrayList<>();
+
         try {
             Document doc = Jsoup.connect(url).get();
             Elements elements = doc.select("script");
-            ArrayList<Firm> companies = new ArrayList<>();
             Gson gson = new Gson();
 
             for (Element element : elements) {
@@ -36,7 +38,7 @@ public class Controller {
         }
         System.out.println("ok");
 
-        return url;
+        return companies;
     }
 
     @GetMapping("/card")
