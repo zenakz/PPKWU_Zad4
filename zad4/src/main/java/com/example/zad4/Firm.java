@@ -1,12 +1,13 @@
 package com.example.zad4;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.web.util.UriComponentsBuilder;
 
 public class Firm {
     String name;
-    String telephone;
-    String email;
-    String url;
+    String telephone ="";
+    String email="";
+    String url="";
     Address address;
 
     @Override public String toString() {
@@ -54,4 +55,19 @@ public class Firm {
     public void setAddress(Address address) {
         this.address = address;
     }
+
+    public String toHtml() {
+        StringBuilder html = new StringBuilder();
+        html.append("<br>").append(name).append("<br>");;
+        html.append(telephone).append("<br>");
+        html.append("<a href=").append(url).append(">").append(url).append("</a><br>");
+        html.append(address).append("<br>");
+        html.append("<a href=mailto:").append(email).append(">").append(email).append("</a><br>");
+        UriComponentsBuilder builder = UriComponentsBuilder.fromPath("/vcard").replaceQueryParam("name", name).replaceQueryParam("address", address).replaceQueryParam("url", url).replaceQueryParam("email", email).replaceQueryParam("telephone", telephone);
+
+        String path = builder.build().encode().toUriString();
+        html.append("<a href=\"").append(path).append("\"><button>Generate vcard</button></a>");
+        return html.toString();
+    }
+
 }

@@ -14,6 +14,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.ArrayList;
@@ -22,9 +24,9 @@ import java.util.List;
 @RestController
 public class Controller {
 
-    @GetMapping("/search")
-    List<Firm> getSearchResults(String searchString, HttpServletResponse response){
-        String url = "https://panoramafirm.pl/szukaj?k="+searchString;
+    @GetMapping(value="/search")
+    String getSearchResults(HttpServletRequest request, HttpServletResponse response) {
+        String url = "https://panoramafirm.pl/szukaj?k="+"d";
         List<Firm> companies = new ArrayList<>();
 
         try {
@@ -41,26 +43,30 @@ public class Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        try {
-            generateVcard(companies.get(0),response);
-        } catch (IOException e) {
-            e.printStackTrace();
+        StringBuilder html = new StringBuilder();
+        for (Firm firm : companies) {
+            html.append(firm.toHtml()).append("<br>");
         }
-        return companies;
+        return html.toString();
     }
 
-    @PostMapping("/vcard")
-    public void generateVcard(@RequestParam(value = "company") Firm firm, HttpServletResponse response) throws IOException {
+    @GetMapping("/vcard")
+    public void generateVcard(@RequestParam(name = "name") String name,
+                              @RequestParam(name = "address") String address,
+                              @RequestParam(name = "url") String url,
+                              @RequestParam(name = "email") String email,
+                              @RequestParam(name = "telephone") String telephone,HttpServletResponse response) throws IOException {
+        System.out.println("aaaasda");
         File file = new File("vCard.vcf");
         FileWriter fileWriter = new FileWriter(file.getAbsoluteFile());
 
         String card = "BEGIN:VCARD\r\n" +
                 "VERSION:4.0\r\n" +
-                "ORG:" + firm.getName() + "\r\n" +
-                "TEL:" + firm.getTelephone() + "\r\n" +
-                "ADR:" + firm.getAddress().toString() + "\r\n" +
-                "EMAIL:" + firm.getEmail() + "\r\n" +
-                "URL:" + firm.getUrl() + "\r\nEND:VCARD";
+                "ORG:" + name + "\r\n" +
+                "TEL:" + telephone + "\r\n" +
+                "EMAIL:" + email + "\r\n" +
+                "ADR:" + address + "\r\n" +
+                "URL:" + url + "\r\nEND:VCARD";
         fileWriter.write(card);
         fileWriter.close();
 
