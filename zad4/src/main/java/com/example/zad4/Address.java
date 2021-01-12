@@ -5,6 +5,15 @@ public class Address {
     String addressLocality;
     String addressCountry;
 
+    @Override
+    public String toString() {
+        return "Address{" +
+                "streetAddress='" + streetAddress + '\'' +
+                ", addressLocality='" + addressLocality + '\'' +
+                ", addressCountry='" + addressCountry + '\'' +
+                '}';
+    }
+
     public String getStreetAddress() {
         return streetAddress;
     }
