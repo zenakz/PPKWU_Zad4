@@ -50,13 +50,12 @@ public class Controller {
         return html.toString();
     }
 
-    @GetMapping("/vcard")
+    @GetMapping("/card")
     public void generateVcard(@RequestParam(name = "name") String name,
                               @RequestParam(name = "address") String address,
                               @RequestParam(name = "url") String url,
                               @RequestParam(name = "email") String email,
                               @RequestParam(name = "telephone") String telephone,HttpServletResponse response) throws IOException {
-        System.out.println("aaaasda");
         File file = new File("vCard.vcf");
         FileWriter fileWriter = new FileWriter(file.getAbsoluteFile());
 

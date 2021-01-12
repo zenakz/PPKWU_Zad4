@@ -61,7 +61,7 @@ public class Firm {
         html.append("<br>").append(name).append("<br>");;
         html.append(telephone).append("<br>");
         html.append("<a href=").append(url).append(">").append(url).append("</a><br>");
-        html.append(address).append("<br>");
+        if(address!=null)html.append(address).append("<br>");
         html.append("<a href=mailto:").append(email).append(">").append(email).append("</a><br>");
         UriComponentsBuilder builder = UriComponentsBuilder.fromPath("/vcard").replaceQueryParam("name", name).replaceQueryParam("address", address).replaceQueryParam("url", url).replaceQueryParam("email", email).replaceQueryParam("telephone", telephone);
 
