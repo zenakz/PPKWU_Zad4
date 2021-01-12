@@ -64,5 +64,9 @@ public class Controller {
         fileWriter.write(card);
         fileWriter.close();
 
+        InputStream inputStream = new FileInputStream(file);
+        response.setContentType("text/vcard;charset=utf-8");
+        IOUtils.copy(inputStream, response.getOutputStream());
+        response.flushBuffer();
     }
 }
